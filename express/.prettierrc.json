@@ -1,0 +1,7 @@
+{
+  "semi": true,
+  "printWidth": 80,
+  "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+  "importOrderSortSpecifiers": true,
+  "importOrderSeparation": true
+}
