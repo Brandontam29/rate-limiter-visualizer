@@ -32,8 +32,16 @@ const button = cva("rounded inline-block", {
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof button>;
 
-const Button = ({ className, variant, size, ...props }: ButtonProps) => (
-  <button className={button({ variant, size, className })} {...props} />
+const Button = ({
+  className,
+  variant,
+  size,
+  children,
+  ...props
+}: ButtonProps) => (
+  <button className={button({ variant, size, className })} {...props}>
+    {children}
+  </button>
 );
 
 export default Button;

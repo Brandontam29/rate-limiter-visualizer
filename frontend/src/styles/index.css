@@ -131,7 +131,7 @@
     --background-level-5: rgba(var(--neutral-500));
 
     --text-body: rgba(var(--neutral-950));
-    --text-secondary: rgba(var(--neutral-500));
+    --text-minor: rgba(var(--neutral-500));
     --text-accent-primary: rgba(var(--primary-500));
     --text-accent-secondary: rgba(var(--primary-600));
     --text-link: rgba(var(--primary-700));
@@ -178,10 +178,13 @@
     --error-background: rgba(var(--red-50));
     --error-background-hover: rgba(var(--red-100));
     --error-heading: rgba(var(--red-600));
-    --error-text: rgba(var(--red-900));
+    --error-text: rgba(var(--red-600));
+    --error-text-minor: rgba(var(--red-400));
     --error-text-hover: rgba(var(--red-800));
     --error-border: rgba(var(--red-400));
+    --error-border-highlight: rgba(var(--red-300));
     --error-border-hover: rgba(var(--red-500));
+    --error-border-focus: rgba(var(--red-400));
 
     --warning-background: rgba(var(--orange-50));
     --warning-background-hover: rgba(var(--orange-100));

@@ -16,6 +16,7 @@ export default {
         },
         text: {
           body: "var(--text-body)",
+          minor: "var(--text-minor)",
           "accent-primary": "var(--text-accent-primary)",
           "accent-secondary": "var(--text-accent-secondary)",
           link: "var(--text-link)",
@@ -76,9 +77,12 @@ export default {
           "background-hover": "var(--error-background-hover)",
           heading: "var(--error-heading)",
           text: "var(--error-text)",
+          "text-minor": "var(--error-text-minor)",
           "text-hover": "var(--error-text-hover)",
           border: "var(--error-border)",
+          "border-highlight": "var(--error-border-highlight)",
           "border-hover": "var(--error-border-hover)",
+          "border-focus": "var(--error-border-focus)",
         },
         warning: {
           background: "var(--warning-background)",

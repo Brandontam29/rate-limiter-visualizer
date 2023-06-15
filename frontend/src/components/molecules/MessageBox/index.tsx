@@ -1,39 +1,61 @@
-import { type VariantProps, cva } from "class-variance-authority";
-import React from "react";
+import Button, { ButtonProps } from "@/components/atoms/Button";
+import Heading, { HeadingProps } from "@/components/atoms/Heading";
+import { cva } from "class-variance-authority";
 
-const button = cva("rounded inline-block", {
+type MessageBoxVariant = "error" | "success" | "warning" | "info";
+
+type MessageBoxProps = {
+  variant?: MessageBoxVariant;
+  title: string;
+  description: string;
+  primaryButtonProps: Pick<ButtonProps, "onClick" | "children">;
+  minorButtonProps?: Pick<ButtonProps, "onClick" | "children">;
+};
+
+const container = cva("rounded-md", {
   variants: {
     variant: {
-      primary: [
-        "bg-blue-500",
-        "text-white",
-        "border-transparent",
-        "hover:bg-blue-600",
-      ],
-      secondary: [
-        "bg-white",
-        "text-gray-800",
-        "border-gray-400",
-        "hover:bg-gray-100",
-      ],
+      error: ["bg-error-bg", "text-error-text"],
+      success: ["bg-success-bg", "text-success-text"],
+      warning: ["bg-warning-bg", "text-warning-text"],
+      info: ["bg-info-bg", "text-info-text"],
     },
-    size: {
-      small: ["text-sm", "py-1", "px-2"],
-      medium: ["text-base", "py-2", "px-4"],
-    },
-  },
-
-  defaultVariants: {
-    variant: "primary",
-    size: "medium",
   },
 });
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof button>;
+const toHeadingVariantProp = (
+  variant: MessageBoxVariant
+): HeadingProps["variant"] => {
+  switch (variant) {
+    case "info":
+      return "text";
 
-const Button = ({ className, variant, size, ...props }: ButtonProps) => (
-  <button className={button({ variant, size, className })} {...props} />
-);
+    default:
+      return variant;
+  }
+};
 
-export default Button;
+const MessageBox = ({
+  variant = "info",
+  title,
+  description,
+  primaryButtonProps,
+  minorButtonProps,
+}: MessageBoxProps) => {
+  return (
+    <div className={container({ variant })}>
+      <Heading tag="h3" variant={toHeadingVariantProp(variant)} size="size-lg">
+        {title}
+      </Heading>
+
+      <p>{description}</p>
+
+      <div>
+        {minorButtonProps && <Button type="button" {...minorButtonProps} />}
+        <Button type="button" {...primaryButtonProps} />
+      </div>
+    </div>
+  );
+};
+
+export default MessageBox;
