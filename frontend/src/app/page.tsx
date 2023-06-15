@@ -1,20 +1,14 @@
 import Heading from "@/components/atoms/Heading";
 import Visualizer from "@/components/organisms/Visualizer";
 import getHelloWorld from "@/fetchers/getHelloWorld";
-import getRequests from "@/fetchers/getRequests";
 import Controls from "@/sections/Controls";
 import UploadUser from "@/sections/UploadUser";
 import { useQuery } from "react-query";
 
 const HomePage = () => {
-  // const { data, isLoading, isError } = useQuery({
-  //   queryKey: ["getHelloWorld"],
-  //   queryFn: getHelloWorld,
-  // });
-
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["getRequests"],
-    queryFn: getRequests,
+  const { data: helloWorldData } = useQuery({
+    queryKey: ["getHelloWorld"],
+    queryFn: getHelloWorld,
   });
 
   return (
@@ -30,6 +24,9 @@ const HomePage = () => {
         <UploadUser />
       </div>
       <Controls />
+      <ul>
+        <li>helloWorldData: {helloWorldData ?? "none"}</li>
+      </ul>
     </div>
   );
 };

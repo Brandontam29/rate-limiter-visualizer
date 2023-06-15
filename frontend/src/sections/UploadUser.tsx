@@ -2,7 +2,7 @@ import Button from "@/components/atoms/Button";
 import Heading from "@/components/atoms/Heading";
 import InputNumber from "@/components/atoms/InputNumber";
 import InputText from "@/components/atoms/InputText";
-import postUser from "@/fetchers/postUser";
+import postEcho from "@/fetchers/postEcho";
 import generateRandomUser from "@/utils/generateRandomUser";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -22,8 +22,8 @@ export type UserType = z.infer<typeof UserSchema>;
 
 const UploadUser = () => {
   const mutation = useMutation({
-    mutationKey: "getHelloWorld",
-    mutationFn: postUser,
+    mutationKey: "postEcho",
+    mutationFn: postEcho,
   });
 
   const {
