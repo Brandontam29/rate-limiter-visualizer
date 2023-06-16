@@ -1,15 +1,13 @@
 import Heading from "@/components/atoms/Heading";
 import Visualizer from "@/components/organisms/Visualizer";
-import getHelloWorld from "@/fetchers/getHelloWorld";
+import getCookies from "@/fetchers/getCookies";
+import useCookie from "@/hooks/useCookie";
 import Controls from "@/sections/Controls";
 import UploadUser from "@/sections/UploadUser";
 import { useQuery } from "react-query";
 
 const HomePage = () => {
-  const { data: helloWorldData } = useQuery({
-    queryKey: ["getHelloWorld"],
-    queryFn: getHelloWorld,
-  });
+  const [cookie, setCookie] = useCookie("sessionCookie");
 
   return (
     <div className="mx-auto container px-2 flex gap-2">
@@ -25,7 +23,7 @@ const HomePage = () => {
       </div>
       <Controls />
       <ul>
-        <li>helloWorldData: {helloWorldData ?? "none"}</li>
+        <li>helloWorldData: {cookies ? cookies.sessionCookie : "none"}</li>
       </ul>
     </div>
   );

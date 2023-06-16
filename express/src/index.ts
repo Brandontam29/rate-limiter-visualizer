@@ -5,6 +5,7 @@ import { createClient } from "redis";
 const main = async () => {
   // Create Express app
   const app = express();
+  app.use(cors());
   app.use(express.json());
 
   // Create Redis client
@@ -18,15 +19,13 @@ const main = async () => {
     console.error("Error connecting to Redis:", err);
   });
 
-  await redisClient.connect();
+  // await redisClient.connect();
 
-  await redisClient.set("key", "value");
+  // await redisClient.set("key", "value");
 
-  const value = await redisClient.get("key");
+  // const value = await redisClient.get("key");
 
-  console.log(value);
-
-  app.use(cors());
+  // console.log(value);
 
   app.use((req, res, next) => {
     console.log("Request received:", req.method, req.url, req.cookies);
@@ -37,8 +36,13 @@ const main = async () => {
     res.json({ message: "Hello World" });
   });
 
-  app.get("/hello-world", async (req, res) => {
+  app.get("/cookies", async (req, res) => {
     res.send("Hello World");
+  });
+
+  app.post("/echo", async (req, res) => {
+    const body = req.body;
+    res.json(body);
   });
 
   // Example route
