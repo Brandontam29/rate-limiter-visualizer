@@ -1,13 +1,11 @@
 import Heading from "@/components/atoms/Heading";
 import Visualizer from "@/components/organisms/Visualizer";
-import getCookies from "@/fetchers/getCookies";
 import useCookie from "@/hooks/useCookie";
 import Controls from "@/sections/Controls";
 import UploadUser from "@/sections/UploadUser";
-import { useQuery } from "react-query";
 
 const HomePage = () => {
-  const [cookie, setCookie] = useCookie("sessionCookie");
+  const [cookie] = useCookie("sessionCookie");
 
   return (
     <div className="mx-auto container px-2 flex gap-2">
@@ -20,11 +18,11 @@ const HomePage = () => {
           <Visualizer requests={[]} />
         </section>
         <UploadUser />
+        <ul>
+          <li>Cookie: {cookie ? cookie : "none"}</li>
+        </ul>
       </div>
       <Controls />
-      <ul>
-        <li>helloWorldData: {cookies ? cookies.sessionCookie : "none"}</li>
-      </ul>
     </div>
   );
 };
