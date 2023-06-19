@@ -19,11 +19,11 @@ const postEcho = async ({ data, sessionCookie }: PostEchoProps) => {
       headers: headers,
     });
 
+    console.log("response", response);
     setCookieMiddleware(response);
-    console.log(response);
     const json = await response.json();
 
-    console.log(json);
+    console.log("json", json);
     return json;
   } catch (err) {
     console.error(err);

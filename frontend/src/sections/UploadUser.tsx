@@ -11,12 +11,12 @@ import { useMutation } from "react-query";
 import { z } from "zod";
 
 const UserSchema = z.object({
-  firstName: z.string().nonempty({ message: "Cannot be empty" }),
-  lastName: z.string().nonempty({ message: "Cannot be empty" }),
+  firstName: z.string().nonempty({ message: "Ask your mama" }),
+  lastName: z.string().nonempty({ message: "Who's your father?" }),
   age: z
-    .number()
+    .number({ invalid_type_error: "Are you alive?" })
     .int({ message: "Do not use decimals" })
-    .positive("Inside the womb is not allowed"),
+    .min(0, "Inside the womb is not allowed"),
 });
 
 export type UserType = z.infer<typeof UserSchema>;
@@ -40,7 +40,7 @@ const UploadUser = () => {
   const onSubmit = handleSubmit((data) => {
     mutation.mutate({ data, sessionCookie });
   });
-
+  console.log(errors);
   return (
     <section>
       <Heading tag="h1" className="sr-only">
@@ -75,7 +75,7 @@ const UploadUser = () => {
           >
             Fake Data
           </Button>
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Echo</Button>
         </div>
       </form>
       <div>

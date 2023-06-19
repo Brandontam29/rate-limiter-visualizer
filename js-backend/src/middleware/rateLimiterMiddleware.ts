@@ -1,12 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { createClient } from "redis";
 
+import generateSessionCookie from "../utils/generateCookie/generateSessionCookie";
+
 const rateLimiterMiddleware = (
   req: Request,
-  _res: Response,
+  res: Response,
   next: NextFunction
 ) => {
-  // Create Redis client
   const redisClient = createClient();
 
   redisClient.on("connect", () => {
@@ -19,7 +20,18 @@ const rateLimiterMiddleware = (
 
   const { cookies } = req;
 
-  console.log("Cookies:", cookies);
+  if (!cookies) {
+    res.setHeader(
+      "Set-Cookie",
+      `sessionCookie=hella; Max-Age=10; Path=/; HttpOnly=true;`
+    );
+
+    res.cookie("sessionCookie", generateSessionCookie(), {
+      maxAge: 900000,
+      path: "/",
+      httpOnly: true,
+    });
+  }
 
   next();
 };
