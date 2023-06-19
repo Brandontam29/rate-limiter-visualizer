@@ -1,9 +1,9 @@
 import ENDPOINT from "@/fetchers/endpoint";
 import { UserType } from "@/sections/UploadUser";
 
-const postEcho = async (data: UserType) => {
+const postFortune = async (data: UserType) => {
   try {
-    const response = await fetch(`${ENDPOINT}/echo`, {
+    const response = await fetch(`${ENDPOINT}/fortune`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
@@ -18,4 +18,4 @@ const postEcho = async (data: UserType) => {
   }
 };
 
-export default postEcho;
+export default postFortune;

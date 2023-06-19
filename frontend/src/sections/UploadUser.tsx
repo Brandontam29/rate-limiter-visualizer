@@ -3,7 +3,7 @@ import Heading from "@/components/atoms/Heading";
 import InputNumber from "@/components/atoms/InputNumber";
 import InputText from "@/components/atoms/InputText";
 import postEcho from "@/fetchers/postEcho";
-import useCookie from "@/hooks/useCookie";
+import postFortune from "@/fetchers/postFortune";
 import generateRandomUser from "@/utils/generateRandomUser";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -23,10 +23,8 @@ const UserSchema = z.object({
 export type UserType = z.infer<typeof UserSchema>;
 
 const UploadUser = () => {
-  const [sessionCookie] = useCookie("sessionCookie");
-
   const mutation = useMutation({
-    mutationFn: postEcho,
+    mutationFn: postFortune,
   });
 
   const {
@@ -39,7 +37,7 @@ const UploadUser = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    mutation.mutate({ data, sessionCookie });
+    mutation.mutate(data);
   });
   console.log(errors);
   return (
@@ -76,7 +74,8 @@ const UploadUser = () => {
           >
             Fake Data
           </Button>
-          <Button type="submit">Echo</Button>
+          {/* <Button type="submit">Echo</Button> */}
+          <Button type="submit">Fortune</Button>
         </div>
       </form>
       <div>

@@ -5,3 +5,5 @@ export const UserSchema = z.object({
   lastName: z.string(),
   age: z.number().int().positive(),
 });
+
+export type UserType = z.infer<typeof UserSchema>;

@@ -1,12 +1,7 @@
+import { UserType } from "../../schema/User";
 import seedRandom from "./seedRandom";
 
-type Person = {
-  firstName: string;
-  lastName: string;
-  age: number;
-};
-
-const generateFortune = (person: Person) => {
+const generateFortune = (person: UserType) => {
   const { firstName, lastName, age } = person;
 
   // Generate a random number based on the person's properties

@@ -2,6 +2,8 @@ import cors from "cors";
 import express from "express";
 
 import rateLimiterMiddleware from "./middleware/rateLimiterMiddleware";
+import { UserSchema } from "./schema/User";
+import generateFortune from "./utils/generateFortune";
 
 var cookieParser = require("cookie-parser");
 
@@ -15,12 +17,30 @@ const main = async () => {
       credentials: true,
     })
   );
+
   app.use(cookieParser());
   app.use(rateLimiterMiddleware());
 
   app.post("/echo", (req, res) => {
     const { body } = req;
     res.json(body);
+  });
+
+  app.post("/fortune", (req, res) => {
+    const { body } = req;
+
+    try {
+      UserSchema.parse(body);
+
+      const fortune = generateFortune(body);
+      res.json(fortune);
+    } catch (err) {
+      console.error(err);
+
+      res.status(400).json({
+        error: "Invalid request body",
+      });
+    }
   });
 
   const port = 3000; // Specify the port number you want to use
