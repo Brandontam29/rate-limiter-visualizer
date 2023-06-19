@@ -147,13 +147,13 @@
 
     --button-primary-background: rgba(var(--primary-500));
     --button-primary-background-hover: rgba(var(--primary-600));
-    --button-primary-text: rgba(var(--neutral-50));
-    --button-primary-text-hover: rgba(var(--neutral-50));
+    --button-primary-text: rgba(var(--neutral-950));
+    --button-primary-text-hover: rgba(var(--neutral-950));
 
     --button-secondary-background: rgba(var(--secondary-500));
     --button-secondary-background-hover: rgba(var(--secondary-600));
-    --button-secondary-text: rgba(var(--neutral-50));
-    --button-secondary-text-hover: rgba(var(--neutral-50));
+    --button-secondary-text: rgba(var(--neutral-950));
+    --button-secondary-text-hover: rgba(var(--neutral-950));
 
     --button-tertiary-background: rgba(var(--neutral-100));
     --button-tertiary-background-hover: rgba(var(--neutral-200));
@@ -162,18 +162,18 @@
 
     --button-error-background: rgba(var(--red-500));
     --button-error-background-hover: rgba(var(--red-400));
-    --button-error-text: rgba(var(--red-50));
-    --button-error-text-hover: rgba(var(--red-50));
+    --button-error-text: rgba(var(--red-950));
+    --button-error-text-hover: rgba(var(--red-950));
 
     --button-warning-background: rgba(var(--orange-500));
     --button-warning-background-hover: rgba(var(--orange-400));
-    --button-warning-text: rgba(var(--orange-50));
-    --button-warning-text-hover: rgba(var(--orange-50));
+    --button-warning-text: rgba(var(--orange-950));
+    --button-warning-text-hover: rgba(var(--orange-950));
 
     --button-success-background: rgba(var(--green-500));
     --button-success-background-hover: rgba(var(--green-400));
-    --button-success-text: rgba(var(--green-50));
-    --button-success-text-hover: rgba(var(--green-50));
+    --button-success-text: rgba(var(--green-950));
+    --button-success-text-hover: rgba(var(--green-950));
 
     --error-background: rgba(var(--red-50));
     --error-background-hover: rgba(var(--red-100));

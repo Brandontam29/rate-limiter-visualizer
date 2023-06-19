@@ -35,7 +35,6 @@ const heading = cva("font-bold", {
 
 export type HeadingProps = {
   tag: "h1" | "h2" | "h3";
-  variant?: "error" | "success" | "warning" | "text";
   children: string | string[];
 } & VariantProps<typeof heading> &
   React.HTMLAttributes<HTMLHeadingElement>;

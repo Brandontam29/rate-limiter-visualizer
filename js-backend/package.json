@@ -15,7 +15,6 @@
   "license": "ISC",
   "dependencies": {
     "cookie-parser": "^1.4.6",
-    "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "nanoid": "^3.3.6",

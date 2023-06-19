@@ -3,11 +3,7 @@ import { createClient } from "redis";
 
 import generateSessionCookie from "../utils/generateCookie/generateSessionCookie";
 
-const rateLimiterMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const rateLimiterMiddleware = () => {
   const redisClient = createClient();
 
   redisClient.on("connect", () => {
@@ -18,22 +14,21 @@ const rateLimiterMiddleware = (
     console.error("Error connecting to Redis:", err);
   });
 
-  const { cookies } = req;
+  return (req: Request, res: Response, next: NextFunction) => {
+    const { cookies, body } = req;
+    console.log("cookies", cookies);
+    console.log("body", body);
 
-  if (!cookies) {
-    res.setHeader(
-      "Set-Cookie",
-      `sessionCookie=hella; Max-Age=10; Path=/; HttpOnly=true;`
-    );
-
-    res.cookie("sessionCookie", generateSessionCookie(), {
-      maxAge: 900000,
-      path: "/",
-      httpOnly: true,
-    });
-  }
-
-  next();
+    if (!cookies) {
+      res.cookie("sessionCookie", generateSessionCookie(), {
+        expires: new Date(new Date().getTime() + 100 * 1000),
+        httpOnly: true,
+        sameSite: "strict",
+        path: "/",
+      });
+    }
+    next();
+  };
 };
 
 export default rateLimiterMiddleware;

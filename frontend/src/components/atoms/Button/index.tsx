@@ -5,16 +5,24 @@ const button = cva("rounded inline-block", {
   variants: {
     variant: {
       primary: [
-        "bg-blue-500",
-        "text-white",
-        "border-transparent",
-        "hover:bg-blue-600",
+        "bg-button-primary-background text-button-primary-text",
+        "hover:bg-button-primary-background-hover hover:text-button-primary-text-hover",
       ],
       secondary: [
-        "bg-white",
-        "text-gray-800",
-        "border-gray-400",
-        "hover:bg-gray-100",
+        "bg-button-secondary-background text-button-secondary-text",
+        "hover:bg-button-secondary-background-hover hover:text-button-secondary-text-hover",
+      ],
+      tertiary: [
+        "bg-button-tertiary-background text-button-tertiary-text",
+        "hover:bg-button-tertiary-background-hover hover:text-button-tertiary-text-hover",
+      ],
+      warning: [
+        "bg-button-warning-background text-button-warning-text",
+        "hover:bg-button-warning-background-hover hover:text-button-warning-text-hover",
+      ],
+      error: [
+        "bg-button-error-background text-button-error-text",
+        "hover:bg-button-error-background-hover hover:text-button-error-text-hover",
       ],
     },
     size: {

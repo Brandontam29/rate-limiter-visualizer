@@ -16,7 +16,8 @@ const UserSchema = z.object({
   age: z
     .number({ invalid_type_error: "Are you alive?" })
     .int({ message: "Do not use decimals" })
-    .min(0, "Inside the womb is not allowed"),
+    .min(0, "Inside the womb is not allowed")
+    .max(130, "Are you a vampire?"),
 });
 
 export type UserType = z.infer<typeof UserSchema>;
