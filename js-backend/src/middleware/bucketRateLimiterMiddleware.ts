@@ -29,8 +29,13 @@ const rateLimiterMiddleware = async () => {
   return async (req: Request, res: Response, next: NextFunction) => {
     const dateNow = Date.now();
 
-    const goNext = (sessionCookie: string) => {
-      redisClient.rPush(sessionCookie, `${dateNow}`);
+    const goNext = async (sessionCookie: string) => {
+      await redisClient.rPush(sessionCookie, `${dateNow}`);
+      res.rateLimiterState = await redisClient.lRange(
+        sessionCookie,
+        -MAX_REQUESTS_PER_MINUTE,
+        -1
+      );
       next();
     };
 
@@ -55,9 +60,9 @@ const rateLimiterMiddleware = async () => {
         -MAX_REQUESTS_PER_MINUTE,
         -1
       );
-      res.rateLimiterState = rateLimiterState;
-      return res.status(429).jsonWithRateLimiterState({
+      return res.status(429).send({
         error: "Too Many Requests",
+        rateLimiterState: rateLimiterState,
       });
     }
 

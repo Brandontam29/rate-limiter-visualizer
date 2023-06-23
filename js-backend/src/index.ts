@@ -1,11 +1,20 @@
 import cors from "cors";
 import express from "express";
 
+import apiWrapperMiddleware from "./middleware/apiWrapperMiddleware";
 import rateLimiterMiddleware from "./middleware/rateLimiterMiddleware";
 import { UserSchema } from "./schema/User";
 import generateFortune from "./utils/generateFortune";
 
 var cookieParser = require("cookie-parser");
+
+declare global {
+  namespace Express {
+    interface Response {
+      rateLimiterState: string[];
+    }
+  }
+}
 
 const main = async () => {
   // Create Express app
@@ -20,19 +29,15 @@ const main = async () => {
 
   app.use(cookieParser());
 
-  // await redisClient.set("key", "value");
-  // const value = await redisClient.get("key");
-
-  // const loveValue = await redisClient.lRange("love", 0, 10);
-
-  // console.log("value", value);
-  // console.log("loveValue", loveValue);
-
+  app.use(apiWrapperMiddleware());
   app.use(await rateLimiterMiddleware());
 
   app.post("/echo", (req, res) => {
     const { body } = req;
-    res.json(body);
+    res.json({
+      ...body,
+      rateLimiterState: res.rateLimiterState,
+    });
   });
 
   app.post("/fortune", (req, res) => {
@@ -42,11 +47,13 @@ const main = async () => {
       UserSchema.parse(body);
 
       const fortune = generateFortune(body);
-      res.json(fortune);
+      res.jsonWithRateLimiterState({
+        fortune: fortune,
+      });
     } catch (err) {
       console.error(err);
 
-      res.status(400).json({
+      res.status(400).jsonWithRateLimiterState({
         error: "Invalid request body",
       });
     }
