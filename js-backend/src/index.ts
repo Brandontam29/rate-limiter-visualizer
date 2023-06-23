@@ -19,7 +19,16 @@ const main = async () => {
   );
 
   app.use(cookieParser());
-  app.use(rateLimiterMiddleware());
+
+  // await redisClient.set("key", "value");
+  // const value = await redisClient.get("key");
+
+  // const loveValue = await redisClient.lRange("love", 0, 10);
+
+  // console.log("value", value);
+  // console.log("loveValue", loveValue);
+
+  app.use(await rateLimiterMiddleware());
 
   app.post("/echo", (req, res) => {
     const { body } = req;
