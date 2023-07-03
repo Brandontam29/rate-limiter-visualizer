@@ -2,15 +2,16 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 
-import apiWrapperMiddleware from "./middleware/apiWrapperMiddleware";
-import rateLimiterMiddleware from "./middleware/rateLimiterMiddleware";
+import cookieWrapperMiddleware from "./middleware/cookieWrapperMiddleware";
 import echoRouter from "./routes/echoRouter";
 import fortuneRouter from "./routes/fortuneRouter";
+import rateLimiterRouter from "./routes/rateLimiterRouter";
+import responseWrapper from "./wrappers/responseWrapper";
 
+const app = express();
+
+// Library Middlewares
 const main = async () => {
-  const app = express();
-
-  // Library Middlewares
   app.use(express.json());
   app.use(
     cors({
@@ -20,15 +21,18 @@ const main = async () => {
   );
   app.use(cookieParser());
 
+  // Wrappers
+  await responseWrapper(app);
+
   // Custom Middlewares
-  app.use(apiWrapperMiddleware());
-  app.use(await rateLimiterMiddleware());
+  app.use(cookieWrapperMiddleware());
+  app.use(await rateLimiterRouter());
 
   // Routes
-  app.use("/api/fortune", fortuneRouter);
-  app.use("/api/echo", echoRouter);
+  app.use("/api/*/fortune", fortuneRouter);
+  app.use("/api/*/echo", echoRouter);
 
-  // Start Server
+  // Server
   const PORT = 3000;
   app.listen(PORT, () => {
     console.log(`Server is running: http://localhost:${PORT}`);

@@ -2,11 +2,11 @@
   "compilerOptions": {
     "lib": ["es2021"],
     "module": "commonjs",
-    "target": "es2021",
-
+    "target": "ES6",
+    "types": ["node", "express"],
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true,
     "alwaysStrict": true,
     "noImplicitAny": true,
@@ -19,12 +19,9 @@
     "outDir": "dist",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "types": ["node"]
+    "moduleResolution": "node"
   },
 
-  "types": ["node"],
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "cypress", "**/*.spec.ts"],
-  "display": "Node 18"
+  "include": ["src/**/*.ts", "types/**/*.d.ts"],
+  "exclude": ["node_modules", "cypress", "**/*.spec.ts"]
 }

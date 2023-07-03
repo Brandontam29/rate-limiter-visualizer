@@ -1,9 +1,14 @@
 import ENDPOINT from "@/fetchers/endpoint";
 import { UserType } from "@/sections/UploadUser";
 
-const postFortune = async (data: UserType) => {
+type FortuneProps = {
+  rateLimiter: RateLimiterType;
+  data: UserType;
+};
+
+const postFortune = async ({ rateLimiter, data }: FortuneProps) => {
   try {
-    const response = await fetch(`${ENDPOINT}/fortune`, {
+    const response = await fetch(`${ENDPOINT}/${rateLimiter}/fortune/quote`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },

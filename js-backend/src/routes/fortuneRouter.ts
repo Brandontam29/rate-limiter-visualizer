@@ -6,6 +6,7 @@ import generateFortune from "../utils/generateFortune";
 const fortuneRouter = express.Router();
 
 fortuneRouter.use((req, res, next) => {
+  console.log("fortuneRouter");
   const { body } = req;
 
   try {
@@ -18,16 +19,19 @@ fortuneRouter.use((req, res, next) => {
   next();
 });
 
-fortuneRouter.get("/quote", (req, res) => {
+fortuneRouter.post("/quote", (req, res) => {
+  console.log("fortuneRouter /quote");
   const { body } = req;
 
   const fortune = generateFortune(body);
+
+  console.log("fortuneRouter /quote", fortune);
   res.jsonWithRateLimiterState({
     fortune: fortune,
   });
 });
 
-fortuneRouter.get("/predict", (req, res) => {
+fortuneRouter.post("/predict", (req, res) => {
   const { body } = req;
 
   const fortune = generateFortune(body);

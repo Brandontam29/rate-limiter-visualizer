@@ -2,7 +2,7 @@ import Button from "@/components/atoms/Button";
 import Heading from "@/components/atoms/Heading";
 import InputNumber from "@/components/atoms/InputNumber";
 import InputText from "@/components/atoms/InputText";
-import postEcho from "@/fetchers/postEcho";
+// import postEcho from "@/fetchers/postEcho";
 import postFortune from "@/fetchers/postFortune";
 import generateRandomUser from "@/utils/generateRandomUser";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,9 +37,9 @@ const UploadUser = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    mutation.mutate(data);
+    mutation.mutate({ rateLimiter: "bucket", data });
   });
-  console.log(errors);
+
   return (
     <section>
       <Heading tag="h1" className="sr-only">
