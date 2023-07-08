@@ -9,19 +9,15 @@ const HomePage = () => {
 
   return (
     <div className="mx-auto container px-2 flex gap-2">
-      <div>
-        <section>
-          <Heading tag={"h1"} size="size-2xl">
-            Visualizer
-          </Heading>
+      <UploadUser />
+      <section>
+        <Heading tag={"h1"} size="size-2xl">
+          Visualizer
+        </Heading>
 
-          <Visualizer requests={[]} />
-        </section>
-        <UploadUser />
-        <ul>
-          <li>Cookie: {cookie ? cookie : "none"}</li>
-        </ul>
-      </div>
+        <Visualizer requests={[]} />
+      </section>
+
       <Controls />
     </div>
   );

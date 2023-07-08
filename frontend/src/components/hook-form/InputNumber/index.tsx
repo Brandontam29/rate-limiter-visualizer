@@ -22,7 +22,7 @@ type InputNumberProps<T extends FieldValues> = {
 };
 
 const input = cva(
-  "block w-full rounded-md border-0 py-1.5 pr-10sm:text-sm sm:leading-6 shadow-sm",
+  "block w-full rounded-md border-0 py-1.5 sm:text-sm sm:leading-6 shadow-sm",
   {
     variants: {
       isError: {

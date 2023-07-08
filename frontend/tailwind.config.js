@@ -7,12 +7,12 @@ export default {
         transparent: "var(--transparent)",
 
         background: {
-          DEFAULT: "var(--color-background)",
-          "level-1": "var(--color-background-level-1)",
-          "level-2": "var(--color-background-level-2)",
-          "level-3": "var(--color-background-level-3)",
-          "level-4": "var(--color-background-level-4)",
-          "level-5": "var(--color-background-level-5)",
+          DEFAULT: "var(--background)",
+          "level-1": "var(--background-level-1)",
+          "level-2": "var(--background-level-2)",
+          "level-3": "var(--background-level-3)",
+          "level-4": "var(--background-level-4)",
+          "level-5": "var(--background-level-5)",
         },
         text: {
           body: "var(--text-body)",

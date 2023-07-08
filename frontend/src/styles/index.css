@@ -139,6 +139,7 @@
     --text-link-visited: rgba(var(--primary-600));
     --text-link-underlined-visited: rgba(var(--tertiary-200));
 
+    --input-primary: rgba(var(--primary-500));
     --input-background: var(--transparent);
     --input-background-autofill: var(--tertiary-100);
     --input-border: rgba(var(--neutral-400));
