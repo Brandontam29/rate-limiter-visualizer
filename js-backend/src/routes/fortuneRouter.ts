@@ -20,18 +20,19 @@ fortuneRouter.use((req, res, next) => {
 });
 
 fortuneRouter.post("/quote", (req, res) => {
-  console.log("fortuneRouter /quote");
+  console.log("fortuneRouter quote");
   const { body } = req;
 
   const fortune = generateFortune(body);
 
-  console.log("fortuneRouter /quote", fortune);
   res.jsonWithRateLimiterState({
     fortune: fortune,
   });
 });
 
 fortuneRouter.post("/predict", (req, res) => {
+  console.log("fortuneRouter predict");
+
   const { body } = req;
 
   const fortune = generateFortune(body);

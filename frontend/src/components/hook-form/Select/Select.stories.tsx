@@ -1,9 +1,9 @@
+import Button from "@/components/atoms/Button";
 import type { Meta } from "@storybook/react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import Select from ".";
-import Button from "../Button";
 
 const meta: Meta<typeof Select> = {
   title: "Atoms/Select",

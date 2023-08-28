@@ -24,6 +24,8 @@ export default {
         },
 
         input: {
+          text: "var(--input-text)",
+          primary: "var(--input-primary)",
           background: "var(--input-background)",
           border: "var(--input-border)",
           "border-focus": "var(--input-border-focus)",

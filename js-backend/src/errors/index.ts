@@ -33,8 +33,7 @@ const ERRORS = {
 
   RATE_LIMIT_EXCEEDED: {
     status: 429,
-    message:
-      "Too Many Requests. Please try again after some time. You have exceeded the maximum rate limit of ${rateLimit} requests per ${timeFrame}.",
+    message: "Too Many Requests. Please try again after some time.",
   },
 } as const;
 

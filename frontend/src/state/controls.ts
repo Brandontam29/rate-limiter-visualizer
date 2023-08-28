@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 
-type RateLimiterType = "bucket" | "token" | "sliding-window";
+export type RateLimiterType = "bucket" | "token" | "sliding-window";
 
 export const doInfiniteQueryAtom = atom(false);
 

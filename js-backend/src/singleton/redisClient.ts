@@ -1,13 +1,17 @@
 import { createClient } from "redis";
 
 const connectRedisClient = async () => {
-  const client = createClient();
+  try {
+    const client = createClient();
 
-  await client.connect();
+    await client.connect();
 
-  client.on("error", (err) => console.log("Redis Client Error", err));
+    client.on("error", (err) => console.error("Redis Client Error", err));
 
-  return client;
+    return client;
+  } catch (e) {
+    throw new Error(e);
+  }
 };
 
 const client = connectRedisClient();

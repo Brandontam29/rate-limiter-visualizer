@@ -1,20 +1,20 @@
 import Heading from "@/components/atoms/Heading";
 import { UserType } from "@/sections/UploadUser";
 
-type Request = {
-  id: string;
-  data: UserType;
-  status:
-    | "sending"
-    | "received"
-    | "pending"
-    | "dismissed"
-    | "success"
-    | "error";
-};
+// type Request = {
+//   id: string;
+//   data: UserType;
+//   status:
+//     | "sending"
+//     | "received"
+//     | "pending"
+//     | "dismissed"
+//     | "success"
+//     | "error";
+// };
 
 type VisualizerProps = {
-  requests: Request[];
+  requests: any[];
 };
 
 const Visualizer = ({ requests }: VisualizerProps) => {

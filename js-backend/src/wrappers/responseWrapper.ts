@@ -41,7 +41,7 @@ const responseWrapper = async (app: Express) => {
   app.response.jsonError = function (errorType) {
     const { status, message } = getErrorInfo(errorType);
 
-    return app.response.status(status).jsonWithRateLimiterState({ message });
+    return this.status(status).jsonWithRateLimiterState({ error: message });
   };
 };
 

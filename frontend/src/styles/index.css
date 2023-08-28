@@ -131,6 +131,7 @@
     --background-level-5: rgba(var(--neutral-500));
 
     --text-body: rgba(var(--neutral-950));
+    --text-body-inversed: rgba(var(--neutral-100));
     --text-minor: rgba(var(--neutral-500));
     --text-accent-primary: rgba(var(--primary-500));
     --text-accent-secondary: rgba(var(--primary-600));
@@ -139,6 +140,7 @@
     --text-link-visited: rgba(var(--primary-600));
     --text-link-underlined-visited: rgba(var(--tertiary-200));
 
+    --input-text: var(--text-body);
     --input-primary: rgba(var(--primary-500));
     --input-background: var(--transparent);
     --input-background-autofill: var(--tertiary-100);
@@ -214,6 +216,17 @@
     :root {
       --background: rgba(var(--neutral-900));
       --text-body: rgba(var(--neutral-50));
+      --text-body-inversed: rgba(var(--neutral-800));
+
+      /* --text-minor: rgba(var(--neutral-500));
+      --text-accent-primary: rgba(var(--primary-500));
+      --text-accent-secondary: rgba(var(--primary-600));
+      --text-link: rgba(var(--primary-700));
+      --text-link-underline: rgba(var(--secondary-400));
+      --text-link-visited: rgba(var(--primary-600));
+      --text-link-underlined-visited: rgba(var(--tertiary-200)); */
+
+      --input-text: var(--text-body-inversed);
     }
   }
 }

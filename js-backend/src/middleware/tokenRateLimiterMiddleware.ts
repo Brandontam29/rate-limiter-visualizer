@@ -19,8 +19,8 @@ const isRateLimited = async (sessionCookie: string, requestTime: number) => {
 
 const tokenRateLimiterMiddleware = async () => {
   const redisClient = await client;
-
   return async (req: Request, res: Response, next: NextFunction) => {
+    console.log("CONTENT TYPE", req.headers["content-type"]);
     console.log("tokenRateLimiterMiddleware");
     const dateNow = Date.now();
     const { sessionCookie } = req;
@@ -33,8 +33,9 @@ const tokenRateLimiterMiddleware = async () => {
         -MAX_REQUESTS_PER_MINUTE,
         -1
       );
-
+      console.log(rateLimiterState);
       res.rateLimiterState = rateLimiterState;
+
       return res.jsonError("RATE_LIMIT_EXCEEDED");
     }
 

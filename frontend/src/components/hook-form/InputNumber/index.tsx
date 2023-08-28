@@ -32,7 +32,7 @@ const input = cva(
           "focus:ring-2 focus:ring-inset focus:ring-error-border-focus",
         ],
         ["false"]: [
-          "text-text-body ring-1 ring-inset ring-input-border",
+          "text-input-text ring-1 ring-inset ring-input-border",
           "placeholder:text-text-minor",
           "focus:ring-2 focus:ring-inset focus:ring-input-border-focus",
         ],

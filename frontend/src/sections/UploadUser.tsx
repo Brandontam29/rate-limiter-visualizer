@@ -2,9 +2,12 @@ import Button from "@/components/atoms/Button";
 import Heading from "@/components/atoms/Heading";
 import InputNumber from "@/components/hook-form/InputNumber";
 import InputText from "@/components/hook-form/InputText";
-import postFortune from "@/fetchers/postFortune";
+import getFortune from "@/fetchers/getFortune";
+import { rateLimiterTypeAtom } from "@/state/controls";
+import { requestsAtom, responsesAtom } from "@/state/requests";
 import generateRandomUser from "@/utils/generateRandomUser";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { z } from "zod";
@@ -15,15 +18,28 @@ const UserSchema = z.object({
   age: z
     .number({ invalid_type_error: "Are you alive?" })
     .int({ message: "Do not use decimals" })
+    .min(-1, "You do not exist")
     .min(0, "Inside the womb is not allowed")
-    .max(130, "Are you a vampire?"),
+    .max(120, "Are you a vampire?"),
 });
 
 export type UserType = z.infer<typeof UserSchema>;
 
 const UploadUser = () => {
+  const setRequests = useSetAtom(requestsAtom);
+  const setResponses = useSetAtom(responsesAtom);
+
+  const rateLimiterType = useAtomValue(rateLimiterTypeAtom);
+
   const mutation = useMutation({
-    mutationFn: postFortune,
+    mutationFn: getFortune,
+    onMutate: (variables) => {
+      setRequests((prev) => [...prev, variables]);
+    },
+    onSuccess: (data, variables, context) => {
+      console.log(JSON.stringify({ data, variables, context }, null, 2));
+      setResponses((prev) => [...prev, data]);
+    },
   });
 
   const {
@@ -36,7 +52,7 @@ const UploadUser = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    mutation.mutate({ rateLimiter: "bucket", data });
+    mutation.mutate({ rateLimiter: rateLimiterType, data });
   });
 
   return (
@@ -76,9 +92,9 @@ const UploadUser = () => {
           <Button type="submit">Fortune</Button>
         </div>
       </form>
-      <div>
-        <pre>{JSON.stringify(mutation.data, null, 2)}</pre>
-      </div>
+      <pre className="block max-w-sm whitespace-pre-wrap">
+        {JSON.stringify(mutation.data, null, 2)}
+      </pre>
     </section>
   );
 };
