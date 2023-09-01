@@ -1,5 +1,5 @@
 import { RadioGroup } from "@headlessui/react";
-import { cva, cx } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 
 const radioGroupOption = cva("border-2 rounded py-2 px-4", {
   variants: {
@@ -24,18 +24,19 @@ type Option = {
   value: string | number | boolean;
 };
 
-type RadioCardGroupProps = {
+type RadioCardGroupProps<TOptions extends readonly Option[] | Option[]> = {
   label: string;
-  options: Readonly<Option[]> | Option[];
-  value: string | number | boolean;
-  onChange: (value: string | number | boolean) => void;
+  options: Readonly<TOptions>;
+  value: TOptions[number]["value"];
+  onChange: (value: TOptions[number]["value"]) => void;
 };
-const RadioCardGroup = ({
+
+const RadioCardGroup = <TOptions extends readonly Option[] | Option[]>({
   label,
   options,
   value,
   onChange,
-}: RadioCardGroupProps) => {
+}: RadioCardGroupProps<TOptions>) => {
   return (
     <RadioGroup value={value} onChange={onChange} className="flex gap-2">
       <RadioGroup.Label className="sr-only">{label}</RadioGroup.Label>

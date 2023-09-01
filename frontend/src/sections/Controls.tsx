@@ -1,11 +1,7 @@
 import Heading from "@/components/atoms/Heading";
 import RadioCardGroup from "@/components/atoms/RadioCardGroup";
 import Toggle from "@/components/atoms/Toggle";
-import {
-  RateLimiterType,
-  doInfiniteQueryAtom,
-  rateLimiterTypeAtom,
-} from "@/state/controls";
+import { doInfiniteQueryAtom, rateLimiterTypeAtom } from "@/state/controls";
 import { useAtom } from "jotai";
 
 const RATE_LIMITER_OPTIONS = [
@@ -29,7 +25,7 @@ const Controls = () => {
 
   console.log({ doInfiniteQuery, rateLimiterType });
   return (
-    <section className="container space-y-2">
+    <section className="space-y-2 fixed top-0 bottom-0 right-0 bg-background-level-1 p-8">
       <Heading tag={"h1"} size="size-2xl">
         Controls
       </Heading>
@@ -41,11 +37,11 @@ const Controls = () => {
 
       <div>
         <Heading tag="h3">Rate Limiter Type</Heading>
-        <RadioCardGroup
+        <RadioCardGroup<typeof RATE_LIMITER_OPTIONS>
           label="Rate Limiter Type"
           options={RATE_LIMITER_OPTIONS}
           value={rateLimiterType}
-          onChange={(type: RateLimiterType) => setRateLimiterType(type)}
+          onChange={(type) => setRateLimiterType(type)}
         />
       </div>
     </section>

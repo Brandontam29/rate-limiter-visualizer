@@ -1,3 +1,4 @@
+import cxtw from "@/utils/cxtw";
 import { type VariantProps, cva } from "class-variance-authority";
 
 const heading = cva("font-bold", {
@@ -44,12 +45,16 @@ const Heading = ({
   size,
   variant = "text",
   children,
+  className,
   ...props
 }: HeadingProps) => {
   const HeadingTag = tag;
 
   return (
-    <HeadingTag className={heading({ size, variant })} {...props}>
+    <HeadingTag
+      className={cxtw(heading({ size, variant }), className)}
+      {...props}
+    >
       {children}
     </HeadingTag>
   );

@@ -9,8 +9,9 @@ const HomePage = () => {
   const requests = useAtomValue(requestsAtom);
 
   return (
-    <div className="mx-auto container px-2 flex gap-2">
+    <div className="py-4 lg:py-8 lg:px-8 mx-auto container px-2 grid gap-8 grid-cols-[300px_300px]">
       <UploadUser />
+
       <section>
         <Heading tag="h1" size="size-2xl">
           Visualizer
@@ -19,7 +20,9 @@ const HomePage = () => {
         <Visualizer requests={requests} />
       </section>
 
-      <Controls />
+      <div className="fixed top-0 bottom-0 right-0 bg-background-level-1">
+        <Controls />
+      </div>
     </div>
   );
 };
