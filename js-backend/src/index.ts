@@ -1,12 +1,13 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 
 import cookieWrapperMiddleware from "./middleware/cookieWrapperMiddleware";
 import echoRouter from "./routes/echoRouter";
 import fortuneRouter from "./routes/fortuneRouter";
 import rateLimiterRouter from "./routes/rateLimiterRouter";
 import responseWrapper from "./wrappers/responseWrapper";
+import redisClient from "./singleton/redisClient";
 
 const app = express();
 
@@ -26,6 +27,13 @@ const main = async () => {
 
   // Custom Middlewares
   app.use(cookieWrapperMiddleware());
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    
+    next();
+  };);
+
+
+  
   app.use(await rateLimiterRouter());
 
   // Routes
