@@ -1,0 +1,13 @@
+{
+  "name": "rate-limiter-visualizer",
+  "version": "1.0.0",
+  "description": "**Frontend**\r - Control Pannel ✅\r - Component Library ✅\r - Rate limiter state visualizer ⚒️\r - Test Simulation 🕔",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.37.1"
+  }
+}
