@@ -14,10 +14,6 @@
 - Express sliding window rate limiter🕔
 - Integration tests
 
-**Rust Backend**
-- Rewrite Express in Rust 🕔
-
-
 ## How to run the project
 
 ### Frontend
