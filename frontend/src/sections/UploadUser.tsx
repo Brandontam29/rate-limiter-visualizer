@@ -15,8 +15,8 @@ import { useMutation } from "react-query";
 import { z } from "zod";
 
 const UserSchema = z.object({
-  firstName: z.string().nonempty({ message: "Ask your mama" }),
-  lastName: z.string().nonempty({ message: "Who's your father?" }),
+  firstName: z.string().min(1, { message: "Ask your mama" }),
+  lastName: z.string().min(1, { message: "Who's your father?" }),
   age: z
     .number({ invalid_type_error: "Are you alive?" })
     .int({ message: "Do not use decimals" })
@@ -44,17 +44,7 @@ const UploadUser = () => {
     },
   });
 
-  const resetFakeData = () => {
-    const user = generateRandomUser();
-    reset(user);
-  };
-
-  const {
-    reset,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UserType>({
+  const form = useForm<UserType>({
     resolver: zodResolver(UserSchema),
     defaultValues: {
       firstName: "Brandon",
@@ -63,36 +53,24 @@ const UploadUser = () => {
     },
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const resetFakeData = () => {
+    const user = generateRandomUser();
+    form.reset(user);
+  };
+  const onSubmit = form.handleSubmit((data) => {
     mutation.mutate({ rateLimiter: rateLimiterType, data });
 
     if (autoFakeData) resetFakeData();
   });
-
   return (
     <section>
       <Heading tag="h1" size="size-2xl">
         Upload User
       </Heading>
       <form onSubmit={onSubmit} className="space-y-2">
-        <InputText
-          label="First Name"
-          register={register}
-          name="firstName"
-          errors={errors}
-        />
-        <InputText
-          label="Last Name"
-          register={register}
-          name="lastName"
-          errors={errors}
-        />
-        <InputNumber
-          label="Age"
-          register={register}
-          name="age"
-          errors={errors}
-        />
+        <InputText label="First Name" form={form} name="firstName" />
+        <InputText label="Last Name" form={form} name="lastName" />
+        <InputNumber label="Age" form={form} name="age" />
         <div className="flex gap-2">
           <Button type="button" onClick={() => resetFakeData()}>
             Fake Data

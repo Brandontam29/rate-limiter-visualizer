@@ -12,8 +12,7 @@ const textToGhostFont = (text: string) =>
     },
     function (err, data) {
       if (err) {
-        console.log("Something went wrong...");
-        console.dir(err);
+        console.log("textToGhostFont went wrong...");
         return;
       }
       console.log(data);

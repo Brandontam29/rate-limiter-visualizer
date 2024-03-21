@@ -26,7 +26,7 @@ const Controls = ({ onClose }: ControlsProps) => {
   const [doInfiniteQuery, setDoInfiniteQuery] = useAtom(doInfiniteQueryAtom);
   const [rateLimiterType, setRateLimiterType] = useAtom(rateLimiterTypeAtom);
 
-  console.log({ doInfiniteQuery, rateLimiterType });
+  // console.log({ doInfiniteQuery, rateLimiterType });
   return (
     <section className="space-y-2 bg-background-level-1 p-8">
       <div className="flex justify-between">

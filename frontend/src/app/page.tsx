@@ -2,6 +2,7 @@ import Heading from "@/components/atoms/Heading";
 import Icon from "@/components/atoms/Icon";
 import Visualizer from "@/components/organisms/Visualizer";
 import Controls from "@/sections/Controls";
+import TestForm from "@/sections/TestForm";
 import UploadUser from "@/sections/UploadUser";
 import { requestsAtom } from "@/state/requests";
 import cxtw from "@/utils/cxtw";
@@ -10,7 +11,7 @@ import { useState } from "react";
 
 const HomePage = () => {
   const requests = useAtomValue(requestsAtom);
-  const [showControls, setShowControls] = useState(true);
+  const [showControls, setShowControls] = useState(false);
   return (
     <div className="py-4 lg:py-8 lg:px-8 mx-auto container px-2 grid gap-8 grid-cols-[300px_300px]">
       <UploadUser />
@@ -22,7 +23,7 @@ const HomePage = () => {
 
         <Visualizer requests={requests} />
       </section>
-
+      <TestForm />
       <div className="fixed right-0 top-1/2 -translate-y-1/2 translate-x-[25px] hover:translate-x-[15px] p-2 transition-translate duration-500">
         <button
           type="button"

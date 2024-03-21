@@ -1,22 +1,48 @@
 import isHookFormError from "@/utils/isHookFormError";
-import { ErrorMessage } from "@hookform/error-message";
 import { cva } from "class-variance-authority";
-import { useMemo } from "react";
-import {
-  FieldErrors,
-  FieldValues,
-  Path,
-  UseFormRegister,
-} from "react-hook-form";
+import { HTMLProps, useMemo } from "react";
+import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 
 type InputTextProps<T extends FieldValues> = {
+  form: UseFormReturn<T>;
   name: Path<T>;
-  register: UseFormRegister<T>;
-  errors?: FieldErrors;
   label: string;
-  disabled?: boolean;
-  placeholder?: string;
   helpText?: string;
+} & Omit<HTMLProps<HTMLInputElement>, "name" | "className" | "form">;
+
+const InputText = <T extends FieldValues>({
+  form,
+  label,
+  name,
+  helpText,
+  ...props
+}: InputTextProps<T>) => {
+  const isError = useMemo(
+    () => isHookFormError(form.formState.errors, name),
+    [name, form.formState.errors]
+  );
+
+  return (
+    <div>
+      <label className="block mb-1" htmlFor={name}>
+        {label}
+      </label>
+      <input
+        {...props}
+        {...form.register(name)}
+        id={name}
+        type="text"
+        className={input({ isError: isError })}
+      />
+
+      {isError && (
+        <p className="text-error-text">
+          {(form.formState.errors?.[name]?.message as string) || ""}
+        </p>
+      )}
+      {helpText && !isError && <p className="text-text-minor">{helpText}</p>}
+    </div>
+  );
 };
 
 const input = cva(
@@ -38,43 +64,5 @@ const input = cva(
     },
   }
 );
-
-const InputText = <T extends FieldValues>({
-  label,
-  register,
-  name,
-  errors = {},
-  disabled,
-  placeholder,
-  helpText,
-}: InputTextProps<T>) => {
-  const isError = useMemo(() => isHookFormError(errors, name), [name, errors]);
-
-  return (
-    <div>
-      <label className="block mb-1" htmlFor={name}>
-        {label}
-      </label>
-      <input
-        id={name}
-        type="text"
-        {...register(name)}
-        disabled={disabled}
-        placeholder={placeholder}
-        className={input({ isError: isError })}
-      />
-
-      <ErrorMessage
-        errors={errors}
-        name={name}
-        message="This is required"
-        render={({ message }) => {
-          return <p className="text-error-text">{message}</p>;
-        }}
-      />
-      {!isError && helpText && <p className="text-text-minor">{helpText}</p>}
-    </div>
-  );
-};
 
 export default InputText;

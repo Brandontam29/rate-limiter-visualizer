@@ -1,117 +1,105 @@
 import Icon from "@/components/atoms/Icon";
-import Tooltip, { TooltipProps } from "@/components/atoms/Tooltip";
 import Transition from "@/components/atoms/Transition";
+import cxtw from "@/utils/cxtw";
 import isHookFormError from "@/utils/isHookFormError";
 import { Listbox } from "@headlessui/react";
-import { ErrorMessage } from "@hookform/error-message";
-import { cx } from "class-variance-authority";
-import { useMemo, useRef } from "react";
-import {
-  FieldErrors,
-  FieldValues,
-  Path,
-  UseFormRegister,
-} from "react-hook-form";
+import { useMemo, useState } from "react";
+import { Controller, FieldValues, Path, UseFormReturn } from "react-hook-form";
 
 type SelectProps<T extends FieldValues> = {
-  label?: string;
+  form: UseFormReturn<T>;
   name: Path<T>;
-  options: { label: string; value: string | boolean | number }[];
-  register: UseFormRegister<T>;
-  tooltip?: TooltipProps;
+  options: { label: string; value: string | number | boolean }[];
+  label: string;
   helpText?: string;
-  errors?: FieldErrors;
 };
-
 const Select = <T extends FieldValues>({
-  helpText,
-  errors = {},
-  tooltip,
-  label,
+  form,
   name,
-  register,
   options,
+  label,
+  helpText,
 }: SelectProps<T>) => {
-  const isError = useMemo(() => isHookFormError(errors, name), [name, errors]);
-  const hasTooltip = !!tooltip && Object.keys(tooltip).length === 0;
+  const [optionLabel, setOptionLabel] = useState(
+    options.find((o) => o.value === form.formState.defaultValues?.[name])
+      ?.label || null
+  );
+  const isError = useMemo(
+    () => isHookFormError(form.formState.errors, name),
+    [name, form.formState.errors]
+  );
 
   return (
-    <div className="inline-block">
-      {(label || hasTooltip) && (
-        <div className="mb-1 block space-x-2">
-          {label && <label htmlFor={name}>{label}</label>}
-          {hasTooltip && <Tooltip {...tooltip} />}
-        </div>
-      )}
-      <Listbox as="div" className="relative">
-        {({ open }) => (
-          <>
-            <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-              {(props) => {
-                return (
-                  <>
-                    <span className="block truncate">
-                      {/* {props.value || defaultValue.label} */}
+    <div>
+      <label className="block mb-1" htmlFor={name}>
+        {label}
+      </label>
+      <Controller
+        name={name}
+        control={form.control}
+        render={({ field }) => (
+          <Listbox
+            value={field.value}
+            onChange={(option) => {
+              setOptionLabel(option.label);
+              field.onChange(option.value);
+            }}
+          >
+            {({ open }) => (
+              <>
+                <Listbox.Button
+                  className={cxtw(
+                    "flex min-w-[128px] items-center justify-between rounded px-2 py-1.5 ring-1 ring-inset ring-input-border",
+                    "focus:ring-2 focus:ring-input-border-focus"
+                  )}
+                >
+                  <span className="mr-2 truncate">
+                    {optionLabel || "Choose an option"}
+                  </span>
+                  <Icon name="ChevronDownIcon" size="size-4" />
+                </Listbox.Button>
+                <Transition.Fade show={open}>
+                  <Listbox.Options className="absolute bg-white divide-y divide-y-gray-200">
+                    {options.map((option) => {
+                      const selected = optionLabel === option.label;
 
-                      {props.value}
-                    </span>
-                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-gray-400">
-                      <Icon name="ChevronUpDownIcon" size="size-4.5" />
-                    </span>
-                  </>
-                );
-              }}
-            </Listbox.Button>
-            <Transition.Fade show={open}>
-              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {options.map((option) => (
-                  <Listbox.Option
-                    key={option.label}
-                    className={({ active }) =>
-                      cx(
-                        active ? "bg-indigo-600 text-white" : "text-gray-900",
-                        "relative cursor-default select-none py-2 pl-3 pr-9"
-                      )
-                    }
-                    value={option.label}
-                  >
-                    {({ selected, active }) => (
-                      <>
-                        <span
-                          className={cx(
-                            selected ? "font-semibold" : "font-normal",
-                            "block truncate"
-                          )}
+                      return (
+                        <Listbox.Option
+                          key={option.label}
+                          value={option}
+                          className="text-gray-900 relative cursor-default select-none py-2 pl-4 pr-10 hover:bg-amber-100 hover:text-amber-900"
                         >
-                          {option.label}
-                        </span>
-                        {selected ? (
                           <span
-                            className={cx(
-                              active ? "text-white" : "text-indigo-600",
-                              "absolute inset-y-0 right-0 flex items-center pr-4"
+                            className={cxtw(
+                              "block truncate",
+                              selected ? "font-medium" : "font-normal"
                             )}
                           >
-                            <Icon name="CheckIcon" size="size-4.5" />
+                            {option.label}
                           </span>
-                        ) : null}
-                      </>
-                    )}
-                  </Listbox.Option>
-                ))}
-              </Listbox.Options>
-            </Transition.Fade>
-          </>
+                          {selected && (
+                            <Icon
+                              name="CheckIcon"
+                              size="size-4.5"
+                              className="absolute right-2 top-1/2 -translate-y-1/2"
+                            />
+                          )}
+                        </Listbox.Option>
+                      );
+                    })}
+                  </Listbox.Options>
+                </Transition.Fade>
+              </>
+            )}
+          </Listbox>
         )}
-      </Listbox>
-      <ErrorMessage
-        errors={errors}
-        name={name}
-        render={({ message }) => {
-          return <p className="text-error-text">{message}</p>;
-        }}
       />
-      {!isError && helpText && <p className="text-text-minor">{helpText}</p>}
+      {isError && (
+        <p className="text-error-text">
+          {(form.formState.errors?.[name]?.message as string) || ""}
+        </p>
+      )}
+      {helpText && !isError && <p className="text-text-minor">{helpText}</p>}
     </div>
   );
 };
